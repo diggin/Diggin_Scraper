@@ -19,17 +19,5 @@
  */
 namespace Diggin\Scraper\Adapter;
 
-/** 
- * @see Diggin_Scraper_Exception
- */
-// require_once 'Diggin/Scraper/Exception.php';
-
-/**
- * @category   Diggin
- * @package    Diggin_Scraper
- * @subpackage Adapter
- * @copyright  2006-2011 sasezaki (http://diggin.musicrider.com)
- * @license    http://diggin.musicrider.com/LICENSE     New BSD License
- */
-class Exception extends \Diggin\Scraper\Exception
+interface Exception
 {}
