@@ -1,0 +1,6 @@
+[submodule "vendor/Diggin_Scraper_Adapter_Htmlscraping"]
+	path = vendor/Diggin_Scraper_Adapter_Htmlscraping
+	url = git://github.com/diggin/Diggin_Scraper_Adapter_Htmlscraping.git
+[submodule "vendor/Diggin_Http_Charset"]
+	path = vendor/Diggin_Http_Charset
+	url = git://github.com/diggin/Diggin_Http_Charset.git

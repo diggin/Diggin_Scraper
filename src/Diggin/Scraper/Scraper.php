@@ -224,9 +224,9 @@ class Scraper extends Process\Aggregate
             $this->setUrl($client->getUri());
         }
 
-        $response = $client->request();
+        $response = $client->send();
 
-        if (!$response->isSuccessful()) {
+        if (!$response->isSuccess()) {
              /**
               * @see Diggin_Scraper_Exception
               */

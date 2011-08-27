@@ -19,21 +19,8 @@
  * @namespace
  */
 namespace Diggin\Scraper\Strategy;
-use Diggin\Uri;
-
-/**
- * @see Diggin_Scraper_Strategy_Abstract
- */
-// require_once 'Diggin/Scraper/Strategy/Abstract.php';
-/**
- * @see Zend_Dom_Query_Css2Xpath
- */
-// require_once 'Zend/Dom/Query/Css2Xpath.php';
- 
-/**
- * @see Diggin_Scraper_Evaluator_Simplexml
- */
-// require_once 'Diggin/Scraper/Evaluator/Simplexml.php';
+use Zend\Dom\Css2Xpath,
+    Zend\Uri\Http as UriHttp;
 
 class Flexible extends AbstractStrategy
 {
@@ -99,7 +86,7 @@ class Flexible extends AbstractStrategy
             if (ctype_alnum($exp)) {
                 return ".//$exp";
             } else {
-                return '.'.preg_replace('#//+#', '//', str_replace(chr(32), '', \Zend\Dom\Query\Css2Xpath::transform($exp)));
+                return '.'.preg_replace('#//+#', '//', str_replace(chr(32), '', Css2Xpath::transform($exp)));
             }
         }
     }
@@ -124,15 +111,12 @@ class Flexible extends AbstractStrategy
      */
     protected function _getBaseuri()
     {
-        if (!$this->_baseUri instanceof Uri\Http) {
+        if (!$this->_baseUri instanceof UriHttp) {
             $simplexml = $this->readResource();
-            // require_once 'Diggin/Scraper/Helper/Simplexml/HeadBaseHref.php';
             $headBase = new \Diggin\Scraper\Helper\Simplexml\HeadBaseHref($simplexml);
             $headBase->setOption(array('baseUrl' => $this->_baseUri));
-            // require_once 'Diggin/Uri/Http.php';
-            $this->_baseUri = new Uri\Http;
-            $this->_baseUri->setBaseUri($headBase->getBaseUrl());
-
+            $this->_baseUri = new UriHttp($headBase->getBaseUrl());
+            //$this->_baseUri->setBaseUri($headBase->getBaseUrl());
         }
 
         return $this->_baseUri;

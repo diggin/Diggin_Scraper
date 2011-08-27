@@ -21,8 +21,8 @@
  */
 namespace Diggin\Scraper\Evaluator;
 
-/** Diggin_Scraper_Evaluator_Abstract */
-// require_once 'Diggin/Scraper/Evaluator/Abstract.php';
+use Zend\Uri\Uri,
+    Zend\Uri\UriFactory;
 
 class Simplexml extends AbstractEvaluator
 {
@@ -31,7 +31,7 @@ class Simplexml extends AbstractEvaluator
      */
     private $_baseUri;
 
-    public function setBaseUri(\Diggin\Uri\Http $uri)
+    public function setBaseUri(Uri $uri)
     {
         $this->_baseUri = $uri;
     }
@@ -71,7 +71,9 @@ class Simplexml extends AbstractEvaluator
                         $value = null;
                     } else {
                         if (in_array($type, array('@href', '@src'))) {
-                            $value = $this->getBaseUri()->getAbsoluteUrl($attribute);
+                            $uri = UriFactory::factory((string)$attribute);
+                            $value = $uri->resolve($this->getBaseUri());
+                            //$value = $this->getBaseUri()->getAbsoluteUrl($attribute);
                         } else {
                             $value = (string) $attribute;
                         }
