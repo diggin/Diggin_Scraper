@@ -18,7 +18,7 @@
 /**
  * @namespace
  */
-namespace Diggin\Scraper\Process;
+namespace Diggin\Scraper;
 
 class Process
 {
@@ -161,8 +161,5 @@ class Process
     {
         $this->_filters = $filters;
     }
-
-    //Processes::image('//img', '@href')->filter(,)
-    //public static function __callStatic()
 }
 

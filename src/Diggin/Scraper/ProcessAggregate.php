@@ -17,14 +17,12 @@
 /**
  * @namespace
  */
-namespace Diggin\Scraper\Process;
+namespace Diggin\Scraper;
 
-/**
- * @see Diggin_Scraper_Process
- */  
-// require_once 'Diggin/Scraper/Process.php';
+use Diggin\Scraper\Process,
+    IteratorAggregate;
 
-class Aggregate implements \IteratorAggregate
+class ProcessAggregate implements IteratorAggregate
 {
 
     protected $_processes = array();

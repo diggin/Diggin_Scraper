@@ -20,10 +20,8 @@
  */
 namespace Diggin\Scraper\Strategy;
 
-/** Diggin_Scraper_Callback_Evaluator */
-//// require_once 'Diggin/Scraper/Callback/Evaluator.php';
-/** Diggin_Scraper_Filter_Iterator */
-// require_once 'Diggin/Scraper/Filter/Iterator.php';
+use Diggin\Scraper\Adapter,
+    Diggin\Scraper\Context;
 
 abstract class AbstractStrategy
 {
@@ -59,7 +57,7 @@ abstract class AbstractStrategy
      * set 
      * 
      */
-    protected abstract function setAdapter(\Diggin\Scraper\Adapter\AdapterInterface $adapter);
+    protected abstract function setAdapter(Adapter $adapter);
     
     protected abstract function getAdapter();
     
@@ -90,7 +88,6 @@ abstract class AbstractStrategy
         }
         return $this->_adaptedResource;
     }
-
     
     public function getResponse()
     {
@@ -115,7 +112,7 @@ abstract class AbstractStrategy
     public function getValues($context, $process)
     {
  
-        if ($context instanceof \Diggin\Scraper\Context) {
+        if ($context instanceof Context) {
             $values = $this->extract($context->read(), $process);
         } else {
             try {

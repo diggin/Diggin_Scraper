@@ -27,7 +27,7 @@ use Zend\Uri\Uri,
 class Simplexml extends AbstractEvaluator
 {
     /**
-     * @var Diggin_Uri_Http
+     * @var Zend\Uri\Http
      */
     private $_baseUri;
 
@@ -73,7 +73,6 @@ class Simplexml extends AbstractEvaluator
                         if (in_array($type, array('@href', '@src'))) {
                             $uri = UriFactory::factory((string)$attribute);
                             $value = $uri->resolve($this->getBaseUri());
-                            //$value = $this->getBaseUri()->getAbsoluteUrl($attribute);
                         } else {
                             $value = (string) $attribute;
                         }

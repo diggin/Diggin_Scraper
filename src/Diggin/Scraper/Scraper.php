@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Diggin - Simplicity PHP Library
  * 
@@ -18,7 +19,10 @@
  */
 namespace Diggin\Scraper;
 
-use Diggin\Scraper\Process\Aggregate;
+use Zend\Http\Client as HttpClient,
+    Zend\Http\Response as HttpResponse,
+    Diggin\Scraper\Process,
+    Diggin\Scraper\ProcessAggregate;
 
 /**
  * @category  Diggin
@@ -26,7 +30,7 @@ use Diggin\Scraper\Process\Aggregate;
  * @copyright 2006-2011 sasezaki (http://diggin.musicrider.com)
  * @license   http://diggin.musicrider.com/LICENSE     New BSD License
  */ 
-class Scraper extends Process\Aggregate
+class Scraper extends ProcessAggregate
 {
 
     /**
@@ -112,7 +116,7 @@ class Scraper extends Process\Aggregate
      * @param  Zend_Http_Client $httpClient
      * @return null
      */
-    public static function setHttpClient(\Zend\Http\Client $httpClient)
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$_httpClient = $httpClient;
     }
@@ -124,12 +128,11 @@ class Scraper extends Process\Aggregate
      */
     public static function getHttpClient()
     {
-        if (!self::$_httpClient instanceof \Zend\Http\Client) {
+        if (!self::$_httpClient instanceof HttpClient) {
             /**
              * @see Zend_Http_Client
              */
-            // require_once 'Zend/Http/Client.php';
-            self::$_httpClient = new \Zend\Http\Client();
+            self::$_httpClient = new HttpClient();
         }
 
         return self::$_httpClient;
@@ -162,13 +165,7 @@ class Scraper extends Process\Aggregate
      */
     private function _callStrategy($response, $strategyName, $adapter = null)
     {
-        try {
-            if (!class_exists($strategyName)) {
-                // require_once 'Zend/Loader.php';
-                \Zend\Loader::loadClass($strategyName);
-            }
-        } catch (\Zend\Exception $e) {
-            // require_once 'Diggin/Scraper/Exception.php';
+        if (!class_exists($strategyName)) {
             throw new Exception("Unable to load strategy '$strategyName': {$e->getMessage()}");
         }
 
@@ -195,7 +192,6 @@ class Scraper extends Process\Aggregate
             /**
              * @see Diggin_Scraper_Strategy_Abstract
              */
-            // require_once 'Diggin/Scraper/Strategy/Flexible.php';
             $strategy = new Strategy\Flexible($response);
             $strategy->setBaseUri($this->_getUrl());
             $strategy->getAdapter()->setConfig(array('url' => $this->_getUrl()));
@@ -230,7 +226,6 @@ class Scraper extends Process\Aggregate
              /**
               * @see Diggin_Scraper_Exception
               */
-             // require_once 'Diggin/Scraper/Exception.php';
              throw new Exception("Http client reported an error: '{$response->getMessage()}'");
         }
         
@@ -251,12 +246,11 @@ class Scraper extends Process\Aggregate
                 $resource['header'] = "HTTP/1.1 200 OK\r\nContent-type: text/html";
             }
             $responseStr = $resource['header']."\r\n\r\n".$resource['body'];
-            // require_once 'Zend/Http/Response.php';
-            $resource = \Zend\Http\Response::fromString($responseStr);
+            $resource = HttpResponse::fromString($responseStr);
         }
         
         // if set uri
-        if (!$resource instanceof \Zend\Http\Response) {
+        if (!$resource instanceof HttpResponse) {
             $resource = $this->_makeRequest($resource);
         }
         
@@ -270,7 +264,7 @@ class Scraper extends Process\Aggregate
     {
         $args = func_get_args();
         
-        if ($args[0] instanceof Process\Process) {
+        if ($args[0] instanceof Process) {
             $this->_processes[] = $args[0];
             return $this;
         }
@@ -282,7 +276,6 @@ class Scraper extends Process\Aggregate
 
         // Validate, process arguments
         if (1 === count($args)) {
-            // require_once 'Diggin/Scraper/Process/Exception.php';
             throw new Process\Exception("Process requires over 2 arguments");
         } elseif (2 === count($args)) {
             if (is_array($args[1]) and (! current($args[1]) instanceof Process\Aggregate)) {
@@ -305,7 +298,7 @@ class Scraper extends Process\Aggregate
             }
             $childprocess = current($args[0]);
 
-            $process = new Process\Process();
+            $process = new Process();
             $process->setExpression($expression);
             $process->setName($name);
             $process->setArrayflag($arrayflag);
@@ -325,7 +318,7 @@ class Scraper extends Process\Aggregate
                 $arrayflag = false;
             }
             
-            $process = new Process\Process();
+            $process = new Process();
             $process->setExpression($expression);
             $process->setName(trim($name));
             $process->setArrayflag($arrayflag);
@@ -386,7 +379,6 @@ class Scraper extends Process\Aggregate
     public function getHelperLoader()
     {
         if (!$this->_helperLoader) {
-            // require_once 'Zend/Loader/PluginLoader.php';
             //initialize helper
             $this->_helperLoader = 
                 new \Zend\Loader\PluginLoader(array(
@@ -420,7 +412,6 @@ class Scraper extends Process\Aggregate
     {
         $helper = $this->getHelper($method);
         if (!method_exists($helper, 'direct')) {
-            // require_once 'Diggin/Scraper/Exception.php';
             throw new Exception('Helper "'.$method.'" does not support overloading via direct()');
         }
 

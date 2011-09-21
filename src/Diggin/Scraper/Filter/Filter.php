@@ -38,7 +38,7 @@ class Filter extends \IteratorIterator
      */
     public static function factory(\Iterator $iterator, $filter)
     {
-        if ( ($filter instanceof \Zend\Filter\Interface) or 
+        if ( ($filter instanceof \Zend\Filter\Filter) or 
               (is_string($filter) and (preg_match('/^[0-9a-zA-Z]/', $filter)) or
               is_callable($filter)) ) {
             $iterator = new \self($iterator);
@@ -52,7 +52,6 @@ class Filter extends \IteratorIterator
                 $iterator = new \RegexIterator($iterator, $filter);
                 $iterator->setMode(\RegexIterator::GET_MATCH);
             } else {
-                // require_once 'Diggin/Scraper/Filter/Exception.php';
                 throw new Exception("Unable to load filter '$filter': {$e->getMessage()}");
             }
         }
@@ -66,18 +65,10 @@ class Filter extends \IteratorIterator
         if (is_callable($filter)) {
             $this->_filter = $filter;
         } else {
-            if (is_string($filter)) {
-                if (!strstr($filter, '_')) {
-                    $filter = ucfirst($filter);
-                    $filter = "Zend_Filter_$filter";
-                }
-
-                // require_once 'Zend/Loader.php';
+            if (class_exists($filter)) {
                 try {
-                    \Zend\Loader::loadClass($filter);
                     $filter = new $filter();
                 } catch (\Zend\Exception $e) {
-                    // require_once 'Diggin/Scraper/Filter/Exception.php';
                     throw new Exception("Unable to load filter '$filter': {$e->getMessage()}");
                 }
             }

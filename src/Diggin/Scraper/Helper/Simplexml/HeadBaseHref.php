@@ -20,8 +20,8 @@
  */
 namespace Diggin\Scraper\Helper\Simplexml;
 
-/** Diggin_Scraper_Helper_Simplexml_SimplexmlAbstract **/
-// require_once 'Diggin/Scraper/Helper/Simplexml/SimplexmlAbstract.php';
+use Zend\Uri\UriFactory,
+    Zend\Uri\Http;
 
 /**
  * Helper for Search Head-Base Tag, ignore bad-scheme
@@ -33,10 +33,6 @@ namespace Diggin\Scraper\Helper\Simplexml;
  */
 class HeadBaseHref extends SimplexmlAbstract
 {
-    /**
-     * 
-     *
-     */
     public function direct()
     {
         return $this->getHeadBaseUrl();
@@ -61,9 +57,11 @@ class HeadBaseHref extends SimplexmlAbstract
     /**
      * Search Base Href
      * 
-     * firefoxではbaseタグが複数記述されていた場合は、最後のものを考慮する。
-     * スキーマがよろしくない場合は、その前のものを考慮
-     * httpスキーマではない場合は無視される。
+     * This behavior reference from Firefox(YEAR - 2010)
+     *
+     * 1. Last base tag will be used.
+     * 2. If schema is not valid, previous base tag will be used.
+     * 3. Not http schema will be ignored.
      *
      * @return mixed
      */
@@ -71,11 +69,13 @@ class HeadBaseHref extends SimplexmlAbstract
     {
         if ($bases = $this->getResource()->xpath('//base[@href]')) {
             rsort($bases);
-            // require_once 'Zend/Uri.php';
             foreach ($bases as $base) {
                 try {
                     $base = current($base->attributes()->href);
-                    $uri = \Zend\Uri::factory($base);
+                    $uri = UriFactory::factory($base);
+                    if (!$uri instanceof Http) {
+                        continue;
+                    }
                     return $uri;
                 } catch (\Zend\Uri\Exception $e) {
                     continue;
