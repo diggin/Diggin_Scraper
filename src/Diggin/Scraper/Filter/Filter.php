@@ -20,6 +20,8 @@
  */
 namespace Diggin\Scraper\Filter;
 
+use Diggin\Scraper\Exception;
+
 class Filter extends \IteratorIterator
 {
     /**
@@ -41,7 +43,7 @@ class Filter extends \IteratorIterator
         if ( ($filter instanceof \Zend\Filter\Filter) or 
               (is_string($filter) and (preg_match('/^[0-9a-zA-Z]/', $filter)) or
               is_callable($filter)) ) {
-            $iterator = new \self($iterator);
+            $iterator = new static($iterator);
             $iterator->setFilter($filter);
         } else {
             $prefix = $filter[0];
@@ -52,7 +54,7 @@ class Filter extends \IteratorIterator
                 $iterator = new \RegexIterator($iterator, $filter);
                 $iterator->setMode(\RegexIterator::GET_MATCH);
             } else {
-                throw new Exception("Unable to load filter '$filter': {$e->getMessage()}");
+                throw new Exception\RuntimeException("Unable to load filter '$filter': {$e->getMessage()}");
             }
         }
 
@@ -68,12 +70,11 @@ class Filter extends \IteratorIterator
             if (class_exists($filter)) {
                 try {
                     $filter = new $filter();
-                } catch (\Zend\Exception $e) {
-                    throw new Exception("Unable to load filter '$filter': {$e->getMessage()}");
+                } catch (\Zend\Filter\Exception $e) {
+                    throw new Exception\RuntimeException("Unable to load filter '$filter': {$e->getMessage()}");
                 }
             }
-            if (!$filter instanceof \Zend\Filter\Interface) {
-                // require_once 'Diggin/Scraper/Filter/Exception.php';
+            if (!$filter instanceof \Zend\Filter\Filter) {
                 $className = get_class($filter);
                 throw new Exception("Unable to load filter: $className");
             }
