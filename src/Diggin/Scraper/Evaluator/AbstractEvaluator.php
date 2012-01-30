@@ -6,7 +6,7 @@ abstract class AbstractEvaluator extends \ArrayIterator
 {
     private $_process;
 
-    public function __construct(array $values, \Diggin\Scraper\Process\Process $process)
+    public function __construct(array $values, \Diggin\Scraper\Process $process)
     {
         $this->_process = $process;
 

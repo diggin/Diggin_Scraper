@@ -19,20 +19,22 @@
  * @namespace
  */
 namespace Diggin\Scraper\Strategy;
+
 use Zend\Dom\Css2Xpath,
-    Zend\Uri\Http as UriHttp;
+    Zend\Uri\Http as UriHttp,
+    Diggin\Scraper\Adapter\Htmlscraping\Htmlscraping,
+    Diggin\Scraper\Exception;
 
 class Flexible extends AbstractStrategy
 {
     protected $_evaluator;
     
-    public function setAdapter(\Diggin\Scraper\Adapter\AdapterInterface $adapter)
+    public function setAdapter(\Diggin\Scraper\Adapter $adapter)
     {
         if (!($adapter instanceof \Diggin\Scraper\Adapter\SimplexmlAbstract)) {
-            // require_once 'Diggin/Scraper/Strategy/Exception.php';
             $msg = get_class($adapter).' is not extends ';
             $msg .= 'Diggin_Scraper_Adapter_SimplexmlAbstract';
-            throw new Exception($msg);
+            throw new \Exception($msg);
         }
 
         $this->_adapter = $adapter;
@@ -41,11 +43,7 @@ class Flexible extends AbstractStrategy
     public function getAdapter()
     {
         if (!isset($this->_adapter)) {
-            /**
-             * @see Diggin_Scraper_Adapter_Htmlscraping
-             */
-            // require_once 'Diggin/Scraper/Adapter/Htmlscraping.php';
-            $this->_adapter = new \Diggin\Scraper\Adapter\Htmlscraping();
+            $this->_adapter = new Htmlscraping();
         }
 
         return $this->_adapter;
@@ -66,9 +64,8 @@ class Flexible extends AbstractStrategy
         // count($results) === 0 is not found by xpath-node
         // $results[0] === false is not found by attributes
         if (count($results) === 0 or ($results[0] === false)) {
-            // require_once 'Diggin/Scraper/Strategy/Exception.php';
             $exp = self::_xpathOrCss2Xpath($process->getExpression());
-            throw new Exception("Couldn't find By Xpath, Process :".$exp);
+            throw new Exception\RuntimeException("Couldn't find By Xpath, Process :".$exp);
         }
 
         return $results;
@@ -106,7 +103,6 @@ class Flexible extends AbstractStrategy
     /**
      * Get Base Uri object
      * 
-     * 
      * @return Diggin_Uri_Http
      */
     protected function _getBaseuri()
@@ -116,7 +112,6 @@ class Flexible extends AbstractStrategy
             $headBase = new \Diggin\Scraper\Helper\Simplexml\HeadBaseHref($simplexml);
             $headBase->setOption(array('baseUrl' => $this->_baseUri));
             $this->_baseUri = new UriHttp($headBase->getBaseUrl());
-            //$this->_baseUri->setBaseUri($headBase->getBaseUrl());
         }
 
         return $this->_baseUri;
