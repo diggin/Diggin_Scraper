@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Diggin - Simplicity PHP Library
  * 
@@ -18,12 +17,16 @@
 /**
  * @namespace
  */
-namespace Diggin\Scraper\Evaluator;
+namespace Diggin\Scraper\Adapter;
+
+use Diggin\Scraper\Adapter;
 
 /**
- * @see Diggin_Scraper_Exception
+ * Adapter Inteface
+ *
+ * @package    Diggin_Scraper
+ * @copyright  2006-2011 sasezaki (http://diggin.musicrider.com)
+ * @license    http://diggin.musicrider.com/LICENSE     New BSD License
  */
-// require_once 'Diggin/Scraper/Exception.php';
-
-class Exception extends \Diggin\Scraper\Exception
+interface StringAdapter extends Adapter
 {}

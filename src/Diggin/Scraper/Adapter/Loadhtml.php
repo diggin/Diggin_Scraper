@@ -19,12 +19,9 @@
  */
 namespace Diggin\Scraper\Adapter;
 
-/**
- * @see Diggin_Scraper_Adapter_SimplexmlAbstract
- */
-// require_once 'Diggin/Scraper/Adapter/SimplexmlAbstract.php';
+use Diggin\Scraper\Adapter\SimplexmlAdapter;
 
-class Loadhtml extends SimplexmlAbstract
+class Loadhtml implements SimplexmlAdapter
 {
     protected $config = array(
         'xml_manifesto' => false,
@@ -40,7 +37,6 @@ class Loadhtml extends SimplexmlAbstract
     public function getSimplexml($response)
     {
         if ($this->config['auto_encoding']) {
-            // require_once 'Diggin/Http/Response/Encoding.php';
             $responseBody = \Diggin\Http\Response\Encoding::encodeResponseObject($response);
         } else {
             $responseBody = $response->getBody();
@@ -50,8 +46,11 @@ class Loadhtml extends SimplexmlAbstract
         $dom = @\DOMDocument::loadHTML($responseBody);
         $simplexml = simplexml_import_dom($dom);
         
-        // ここまででもいいのだけど。
-        // XML宣言が付いていないので付与する。
+        /**
+         * add xml manifest
+         * @see http://goungoun.dip.jp/app/fswiki/wiki.cgi/devnotebook?
+         * page=PHP5%A1%A2%CC%A4%C0%B0%B7%C1HTML%A4%F2SimpleXML%A4%D8%CA%D1%B4%B9
+         */
         if ($this->config["xml_manifesto"] === true) {
             $str = $simplexml->asXML();
             {
@@ -60,8 +59,6 @@ class Loadhtml extends SimplexmlAbstract
                     $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . $str;
                 }
                 
-                //@see http://goungoun.dip.jp/app/fswiki/wiki.cgi/devnotebook?
-                // page=PHP5%A1%A2%CC%A4%C0%B0%B7%C1HTML%A4%F2SimpleXML%A4%D8%CA%D1%B4%B9
                 // HTML中の改行が数値文字参照になってしまったので、
                 // 文字に戻す。
                 $str = $this->_numentToChar($str);

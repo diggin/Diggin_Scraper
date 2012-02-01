@@ -22,7 +22,8 @@ namespace Diggin\Scraper;
 use Zend\Http\Client as HttpClient,
     Zend\Http\Response as HttpResponse,
     Diggin\Scraper\Process,
-    Diggin\Scraper\ProcessAggregate;
+    Diggin\Scraper\ProcessAggregate,
+    Diggin\Scraper\Exception;
 
 /**
  * @category  Diggin
@@ -139,10 +140,10 @@ class Scraper extends ProcessAggregate
     }
 
     /**
-     * changing Strartegy
+     * changing Strategy
      * 
      * @param string $strategyName
-     * @param Diggin_Scraper_Adapter_Interface $adapter
+     * @param Diggin_Scraper_Adapter $adapter
      */
     public static function changeStrategy($strategyName, $adapter = null)
     {
@@ -166,7 +167,7 @@ class Scraper extends ProcessAggregate
     private function _callStrategy($response, $strategyName, $adapter = null)
     {
         if (!class_exists($strategyName)) {
-            throw new Exception("Unable to load strategy '$strategyName': {$e->getMessage()}");
+            throw new Exception\DomainException("Unable to load strategy '$strategyName': {$e->getMessage()}");
         }
 
         $strategy = new $strategyName($response);
@@ -189,9 +190,6 @@ class Scraper extends ProcessAggregate
     public function getStrategy($response)
     {
         if (!$this->_strategy instanceof Strategy\AbstractStrategy) {
-            /**
-             * @see Diggin_Scraper_Strategy_Abstract
-             */
             $strategy = new Strategy\Flexible($response);
             $strategy->setBaseUri($this->_getUrl());
             $strategy->getAdapter()->setConfig(array('url' => $this->_getUrl()));
@@ -226,7 +224,7 @@ class Scraper extends ProcessAggregate
              /**
               * @see Diggin_Scraper_Exception
               */
-             throw new Exception("Http client reported an error: '{$response->getMessage()}'");
+             throw new Exception\RuntimeException("Http client reported an error: '{$response->getMessage()}'");
         }
         
         return $response;
@@ -276,11 +274,10 @@ class Scraper extends ProcessAggregate
 
         // Validate, process arguments
         if (1 === count($args)) {
-            throw new Process\Exception("Process requires over 2 arguments");
+            throw new Exception\BadMethodCallException("Process requires over 2 arguments");
         } elseif (2 === count($args)) {
-            if (is_array($args[1]) and (! current($args[1]) instanceof Process\Aggregate)) {
-                // require_once 'Diggin/Scraper/Process/Exception.php';
-                throw new Process\Exception("Child Process's value shold be instanceof Diggin_Scraper_Process_Aggregate");
+            if (is_array($args[1]) and (! current($args[1]) instanceof ProcessAggregate)) {
+                throw new Exception\InvalidArgumentException("Child Process's value shold be instanceof Diggin\Scraper\ProcessAggregate");
             }
         }
 
@@ -412,7 +409,7 @@ class Scraper extends ProcessAggregate
     {
         $helper = $this->getHelper($method);
         if (!method_exists($helper, 'direct')) {
-            throw new Exception('Helper "'.$method.'" does not support overloading via direct()');
+            throw new Exception\DomainException('Helper "'.$method.'" does not support overloading via direct()');
         }
 
         return call_user_func_array(array($helper, 'direct'), $args);

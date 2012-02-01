@@ -22,19 +22,22 @@ namespace Diggin\Scraper\Strategy;
 
 use Zend\Dom\Css2Xpath,
     Zend\Uri\Http as UriHttp,
+    Diggin\Scraper\Adapter,
     Diggin\Scraper\Adapter\Htmlscraping\Htmlscraping,
     Diggin\Scraper\Exception;
 
 class Flexible extends AbstractStrategy
 {
+    protected $adapterReadMethod = 'getSimplexml';
+
     protected $_evaluator;
     
-    public function setAdapter(\Diggin\Scraper\Adapter $adapter)
+    public function setAdapter(Adapter $adapter)
     {
-        if (!($adapter instanceof \Diggin\Scraper\Adapter\SimplexmlAbstract)) {
+        if (!($adapter instanceof \Diggin\Scraper\Adapter\SimplexmlAdapter)) {
             $msg = get_class($adapter).' is not extends ';
             $msg .= 'Diggin_Scraper_Adapter_SimplexmlAbstract';
-            throw new \Exception($msg);
+            throw new Exception\LogicException($msg);
         }
 
         $this->_adapter = $adapter;

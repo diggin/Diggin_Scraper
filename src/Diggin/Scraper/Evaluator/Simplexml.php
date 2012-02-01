@@ -22,7 +22,9 @@
 namespace Diggin\Scraper\Evaluator;
 
 use Zend\Uri\Uri,
-    Zend\Uri\UriFactory;
+    Zend\Uri\UriFactory,
+    Diggin\Scraper\Evaluator\AbstractEvaluator,
+    Diggin\Scraper\Exception;
 
 class Simplexml extends AbstractEvaluator
 {
@@ -82,9 +84,8 @@ class Simplexml extends AbstractEvaluator
                 } 
         }
 
-        // require_once 'Diggin/Scraper/Evaluator/Exception.php';
         $process = $this->getProcess();
-        throw new Exception($type." is unknown type ($process)");
+        throw new Exception\InvalidArgumentException($type." is unknown type ($process)");
     }
 
 }

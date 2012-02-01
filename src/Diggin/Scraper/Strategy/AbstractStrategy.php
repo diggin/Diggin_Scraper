@@ -20,11 +20,16 @@
  */
 namespace Diggin\Scraper\Strategy;
 
-use Diggin\Scraper\Adapter,
-    Diggin\Scraper\Context;
+use LimitIterator,
+    Diggin\Scraper\ProcessAggregate,
+    Diggin\Scraper\Adapter,
+    Diggin\Scraper\Context,
+    Diggin\Scraper\Exception;
 
 abstract class AbstractStrategy
 {
+    protected $adapterReadMethod;
+
     /**
      * response
      *
@@ -64,7 +69,7 @@ abstract class AbstractStrategy
     /**
      * construct
      * 
-     * @param Zend_Http_Response
+     * @param Zend\Http\Response
      */
     public function __construct($response)
     {
@@ -84,7 +89,8 @@ abstract class AbstractStrategy
     public function readResource()
     {
         if (!$this->_adaptedResource) {
-            $this->_adaptedResource = $this->getAdapter()->readData($this->getResponse());
+            $readmethod = $this->adapterReadMethod;
+            $this->_adaptedResource = $this->getAdapter()->$readmethod($this->getResponse());
         }
         return $this->_adaptedResource;
     }
@@ -104,7 +110,7 @@ abstract class AbstractStrategy
      * @param mixed $context 
      *          [first:Diggin_Scraper_Context
      *           second:array]
-     * @param Diggin_Scraper_Process $process
+     * @param Process $process
      * @return mixed $values
      * @throws Diggin_Scraper_Strategy_Exception
      * @throws Diggin_Scraper_Filter_Exception
@@ -122,7 +128,7 @@ abstract class AbstractStrategy
             }
         }
 
-       if ($process->getType() instanceof \Diggin\Scraper\Process\Aggregate) {
+       if ($process->getType() instanceof ProcessAggregate) {
             $returns = false;
             foreach ($values as $count => $val) {
                 foreach ($process->getType() as $proc) {
@@ -144,15 +150,14 @@ abstract class AbstractStrategy
         $values = $this->getEvaluator($values, $process);
         if ($process->getFilters()) {
             $values = new \Diggin\Scraper\Filter\Iterator($values);
-            //$values = Diggin_Scraper_Filter::factory($values, $process->getFilters());
         }
 
         $arrayflag = $process->getArrayFlag();
 
         if ($arrayflag === false) {
-            $values = new \LimitIterator($values, 0, 1);
+            $values = new LimitIterator($values, 0, 1);
         } else if (is_array($arrayflag)) {
-            $values = new \LimitIterator($values, $arrayflag['offset'], $arrayflag['count']);
+            $values = new LimitIterator($values, $arrayflag['offset'], $arrayflag['count']);
         }
  
         //@todo using iterator option

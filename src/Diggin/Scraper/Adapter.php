@@ -27,11 +27,4 @@ namespace Diggin\Scraper;
  * @license    http://diggin.musicrider.com/LICENSE     New BSD License
  */
 interface Adapter
-{
-    /**
-     * Read data (adapted response)
-     *
-     * @param mixed $response
-     */
-    public function readData($response);
-}
+{}

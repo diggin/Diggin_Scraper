@@ -39,7 +39,7 @@ class Context
     }
 
     /**
-     * Read adapted resource vi strategy->readResource
+     * Read adapted resource via strategy->readResource
      *
      * @return mixed 
      */

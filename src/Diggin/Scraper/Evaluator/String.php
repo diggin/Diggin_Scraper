@@ -21,12 +21,11 @@
  */
 namespace Diggin\Scraper\Evaluator;
 
-/** Diggin_Scraper_Evaluator_Abstract */
-// require_once 'Diggin/Scraper/Evaluator/Abstract.php';
+use Diggin\Scraper\Evaluator\AbstractEvaluator,
+    Diggin\Scraper\Exception;
 
 class String extends AbstractEvaluator
 {
-
     protected function _eval($string)
     {
         $type = $this->getProcess()->getType();
@@ -40,8 +39,7 @@ class String extends AbstractEvaluator
                 return $value;
         }
 
-        // require_once 'Diggin/Scraper/Evaluator/Exception.php';
         $process = $this->getProcess();
-        throw new Exception($type." is unknown type ($process)");
+        throw new Exception\InvalidArgumentException($type." is unknown type ($process)");
     }
 }

@@ -2,11 +2,14 @@
 
 namespace Diggin\Scraper\Evaluator;
 
-abstract class AbstractEvaluator extends \ArrayIterator
+use ArrayIterator,
+    Diggin\Scraper\Process;
+
+abstract class AbstractEvaluator extends ArrayIterator
 {
     private $_process;
 
-    public function __construct(array $values, \Diggin\Scraper\Process $process)
+    public function __construct(array $values, Process $process)
     {
         $this->_process = $process;
 

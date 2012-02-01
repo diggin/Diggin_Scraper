@@ -20,8 +20,6 @@
  */
 namespace Diggin\Scraper\Helper\Simplexml;
 
-/** Diggin_Scraper_Helper_Simplexml_Simplexml_HeadBaseHref **/
-// require_once 'Diggin/Scraper/Helper/Simplexml/HeadBaseHref.php';
 
 /**
  * Helper for pagerize info
@@ -31,8 +29,7 @@ namespace Diggin\Scraper\Helper\Simplexml;
  * @copyright  2006-2011 sasezaki (http://diggin.musicrider.com)
  * @license    http://diggin.musicrider.com/LICENSE     New BSD License
  */
-class Pagerize
-        extends HeadBaseHref
+class Pagerize extends HeadBaseHref
 {
     
     const HATOM_PAGEELEMENT = '//*[contains(concat(" ", @class, " "), " hentry ")]';
@@ -163,14 +160,11 @@ class Pagerize
     public function hasSiteinfo($suffix)
     {
         $ids = self::$_cache->getIds();
-        //array_search()
     }
 
     public static function loadSiteinfo($suffix)
     {
         return self::$_cache->load(self::CACHE_TAG_PREFIX.$suffix);
     }
-    
-    
 
 }

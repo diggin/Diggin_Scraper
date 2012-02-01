@@ -19,7 +19,10 @@
  */
 namespace Diggin\Scraper\Adapter;
 
-class Normal extends StringAbstract
+use Diggin\Scraper\Adapter\StringAdapter,
+    Diggin\Scraper\Exception\InvalidArgumentException;
+
+class Normal implements StringAdapter
 {
     protected $_config = array();
     
@@ -37,11 +40,13 @@ class Normal extends StringAbstract
 
     public function setConfig($config = array())
     {
-        if (! is_array($config))
-            throw new Exception('Expected array parameter, given ' . gettype($config));
+        if (! is_array($config)) {
+            throw new InvalidArgumentException('Expected array parameter, given ' . gettype($config));
+        }
 
-        foreach ($config as $k => $v)
+        foreach ($config as $k => $v) {
             $this->_config[strtolower($k)] = $v;
+        }
 
         return $this;
     }

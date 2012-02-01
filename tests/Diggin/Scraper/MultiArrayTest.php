@@ -8,26 +8,19 @@ use Diggin\Scraper\Scraper,
 class MultiArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var    Diggin_Scraper
+     * @var    Scraper
      * @access protected
      */
     protected $object;
 
     private $_responseHeader200 = "HTTP/1.1 200 OK\r\nContent-type: text/html";
-    
-    
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     *
-     * @access protected
-     */
+
     protected function setUp()
     {
         $this->object = new Scraper;
     }
 
-    public function testKouzoutai()
+    public function testTwoDimentional()
     {
         $html = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -54,24 +47,22 @@ class MultiArrayTest extends \PHPUnit_Framework_TestCase
 </html>
 HTML;
 
-$adapter = new ClientAdapterTest();
-$adapter->setResponse(
-    "HTTP/1.1 200 OK"        . "\r\n" .
-    "Content-type: text/html" . "\r\n" .
+        $adapter = new ClientAdapterTest();
+        $adapter->setResponse(
+            "HTTP/1.1 200 OK"        . "\r\n" .
+            "Content-type: text/html" . "\r\n" .
                                "\r\n" .
-    $html);
-$test = new Client($url = 'http://www.yahoo.jp', array('adapter' => $adapter));
+        $html);
+        $test = new Client($url = 'http://www.yahoo.jp', array('adapter' => $adapter));
 
+        $scraper = new Scraper();
+        $scraper->setHttpClient($test);
 
-$scraper = new Scraper();
-$scraper->setHttpClient($test);
+        $items = new Scraper();
+        $items->process("a", 'title','TEXT')
+              ->process('a', 'link', '@href');
 
-$items = new Scraper();
-//$items->process("a", "title => 'TEXT'", "link => '@href'");
-$items->process("a", 'title','TEXT')
-      ->process('a', 'link', '@href');
-
-$results = $scraper->process("ul.news>li", array('result[]' => $items))
+        $results = $scraper->process("ul.news>li", array('result[]' => $items))
                    ->scrape("http://localhost/~tobe/news_sample.html");
         $this->assertTrue(is_array($results['result']));
         $this->assertTrue(isset($results['result']['0']['title']));

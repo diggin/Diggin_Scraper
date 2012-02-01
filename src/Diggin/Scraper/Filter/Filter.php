@@ -20,9 +20,11 @@
  */
 namespace Diggin\Scraper\Filter;
 
-use Diggin\Scraper\Exception;
+use IteratorIterator,
+    RegexIterator,
+    Diggin\Scraper\Exception;
 
-class Filter extends \IteratorIterator
+class Filter extends IteratorIterator
 {
     /**
      * Filter - store
@@ -49,9 +51,9 @@ class Filter extends \IteratorIterator
             $prefix = $filter[0];
 
             if ($prefix === '/' or $prefix === '#') {
-                $iterator = new \RegexIterator($iterator, $filter);
+                $iterator = new RegexIterator($iterator, $filter);
             } elseif ($prefix === '$') {
-                $iterator = new \RegexIterator($iterator, $filter);
+                $iterator = new RegexIterator($iterator, $filter);
                 $iterator->setMode(\RegexIterator::GET_MATCH);
             } else {
                 throw new Exception\RuntimeException("Unable to load filter '$filter': {$e->getMessage()}");
@@ -76,7 +78,7 @@ class Filter extends \IteratorIterator
             }
             if (!$filter instanceof \Zend\Filter\Filter) {
                 $className = get_class($filter);
-                throw new Exception("Unable to load filter: $className");
+                throw new Exception\RuntimeException("Unable to load filter: $className");
             }
 
             $this->_filter['filter'] = $filter;

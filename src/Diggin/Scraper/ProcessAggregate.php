@@ -19,8 +19,9 @@
  */
 namespace Diggin\Scraper;
 
-use Diggin\Scraper\Process,
-    IteratorAggregate;
+use IteratorAggregate,
+    Diggin\Scraper\Process,
+    Diggin\Scraper\Exception;
 
 class ProcessAggregate implements IteratorAggregate
 {
@@ -77,7 +78,7 @@ class ProcessAggregate implements IteratorAggregate
                 if (strpos($nametype, '=>') !== false) {
                     list($name, $types) = explode('=>', $nametype);
                 } else {
-                    throw new Exception("invalid argument. none with \'->\'");
+                    throw new Exception\InvalidArgumentException("invalid argument. none with \'->\'");
                 }
 
                 if ((substr(trim($name), -2) == '[]')) {

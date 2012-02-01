@@ -28,5 +28,4 @@ namespace Diggin\Scraper;
  * @license    http://diggin.musicrider.com/LICENSE     New BSD License
  */
 interface Exception
-{
-}
+{}
