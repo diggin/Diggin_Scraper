@@ -99,7 +99,7 @@ class Process
      */
     public function setName($name)
     {
-        $this->_name = trim(strtolower($name));
+        $this->_name = trim($name);
     }
 
     /**
