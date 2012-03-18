@@ -1,4 +1,4 @@
-ggin_Scraper
+Diggin_Scraper
 ===============
 web-sraping component, inspired by Perl’s Web::Scraper. It provides a DSL-ish interface for traversing HTML documents and returning a neatly arranged PHP's multidimensional array.
 
