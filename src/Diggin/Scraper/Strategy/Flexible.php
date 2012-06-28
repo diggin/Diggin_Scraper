@@ -57,8 +57,7 @@ class Flexible extends AbstractStrategy
      *
      * @param Diggin_Scraper_Wrapper_SimpleXMLElement $values
      * @param Diggin_Scraper_Process $process
-     * @return array
-     * @throws Diggin_Scraper_Strategy_Exception
+     * @return array|false
      */
     public function extract($values, $process)
     {
@@ -67,8 +66,7 @@ class Flexible extends AbstractStrategy
         // count($results) === 0 is not found by xpath-node
         // $results[0] === false is not found by attributes
         if (count($results) === 0 or ($results[0] === false)) {
-            $exp = self::_xpathOrCss2Xpath($process->getExpression());
-            throw new Exception\RuntimeException("Couldn't find By Xpath, Process :".$exp);
+            return false;
         }
 
         return $results;

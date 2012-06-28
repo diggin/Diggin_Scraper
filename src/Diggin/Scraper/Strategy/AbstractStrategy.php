@@ -121,9 +121,8 @@ abstract class AbstractStrategy
         if ($context instanceof Context) {
             $values = $this->extract($context->read(), $process);
         } else {
-            try {
-                $values = $this->extract($context, $process);
-            } catch (Exception $e) {
+            $values = $this->extract($context, $process);
+            if ($values === false) {
                 return false;
             }
         }
