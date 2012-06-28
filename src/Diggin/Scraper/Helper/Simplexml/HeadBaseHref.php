@@ -57,6 +57,9 @@ class HeadBaseHref extends SimplexmlAbstract
     /**
      * Search Base Href
      * 
+     * behavior is changed from April 1 2012.
+     * current browswer seems not check
+     *
      * This behavior reference from Firefox(YEAR - 2010)
      *
      * 1. Last base tag will be used.
@@ -68,19 +71,10 @@ class HeadBaseHref extends SimplexmlAbstract
     public function getHeadBaseUrl()
     {
         if ($bases = $this->getResource()->xpath('//base[@href]')) {
-            rsort($bases);
-            foreach ($bases as $base) {
-                try {
-                    $base = current($base->attributes()->href);
-                    $uri = UriFactory::factory($base);
-                    if (!$uri instanceof Http) {
-                        continue;
-                    }
-                    return $uri;
-                } catch (\Zend\Uri\Exception $e) {
-                    continue;
-                }
-            }
+            $basehref = current($base->attributes()->href);
+            // @todo
+            // should be check valid schema & logging
+            return $basehref;
         }
         
         return null;
