@@ -9,8 +9,20 @@
             "email": "sasezaki@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
     "require": {
-
+        "zendframework/zend-http": "2.0.*",
+        "zendframework/zend-dom": "2.0.*",
+        "diggin/Diggin_Http_Charset": "dev-master",
+        "diggin/diggin_scraper_adapter_htmlscraping": "dev-master"
+    },
+    "require-dev": {
+        "zendframework/zend-filter": "2.0.*"
     },
     "autoload": {
         "psr-0": {
