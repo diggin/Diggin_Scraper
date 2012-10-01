@@ -20,10 +20,7 @@
  */
 namespace Diggin\Scraper\Helper\Simplexml;
 
-/** Diggin_Scraper_Helper_Simplexml_SimplexmlAbstract */
-// require_once 'Diggin/Scraper/Helper/Simplexml/SimplexmlAbstract.php';
-/** Diggin_Uri_Http */
-// require_once 'Diggin/Uri/Http.php';
+use Zend\Uri\UriFactory;
 
 /**
  * Helper for Autodiscovery
@@ -56,7 +53,7 @@ class Autodiscovery extends SimplexmlAbstract
      * discovery feed url
      * 
      * @param string $type
-     * @param string|Zend_Uri_Http $baseUrl
+     * @param string|Zend\Uri\Http $baseUrl
      * @return mixed
      */
     public function discovery($type = null, $baseUrl = null)
@@ -75,9 +72,8 @@ class Autodiscovery extends SimplexmlAbstract
             foreach ($links as $v) {
                 
                 if (isset($baseUrl)) {
-                    $uri = new \Diggin\Uri\Http();
-                    $uri->setBaseUri($baseUrl);
-                    $ret[] = $uri->getAbsoluteUrl(current($v->href));
+                    $uri = UriFactory::factory(current($v->href));
+                    $ret[] = (string) $uri->resolve($baseUrl);
                 } else {
                     $ret[] = current($v->href);
                 }
