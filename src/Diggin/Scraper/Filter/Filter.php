@@ -42,7 +42,7 @@ class Filter extends IteratorIterator
      */
     public static function factory(\Iterator $iterator, $filter)
     {
-        if ( ($filter instanceof \Zend\Filter\Filter) or 
+        if ( ($filter instanceof \Zend\Filter\FilterInterface) or 
               (is_string($filter) and (preg_match('/^[0-9a-zA-Z]/', $filter)) or
               is_callable($filter)) ) {
             $iterator = new static($iterator);
