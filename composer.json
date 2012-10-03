@@ -1,5 +1,5 @@
 {
-    "name": "diggin/diggin_scraper",
+    "name": "diggin/diggin-scraper",
     "description": "web-sraping component, inspired by Perl’s Web::Scraper. It provides a DSL-ish interface for traversing HTML documents and returning a neatly arranged PHP ‘s multidimensional array",
     "license":"BSD-3-Clause",
     "minimum-stability": "dev",
@@ -18,8 +18,8 @@
     "require": {
         "zendframework/zend-http": "2.0.*",
         "zendframework/zend-dom": "2.0.*",
-        "diggin/Diggin_Http_Charset": "dev-master",
-        "diggin/diggin_scraper_adapter_htmlscraping": "dev-master"
+        "diggin/diggin-http-charset": "dev-master",
+        "diggin/diggin-scraper-adapter-htmlscraping": "dev-master"
     },
     "require-dev": {
         "zendframework/zend-filter": "2.0.*"
