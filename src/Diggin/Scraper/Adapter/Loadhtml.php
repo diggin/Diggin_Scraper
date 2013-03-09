@@ -20,6 +20,7 @@
 namespace Diggin\Scraper\Adapter;
 
 use Diggin\Scraper\Adapter\SimplexmlAdapter;
+use Diggin\Http\Charset\WrapperFactory;
 
 class Loadhtml implements SimplexmlAdapter
 {
@@ -37,13 +38,18 @@ class Loadhtml implements SimplexmlAdapter
     public function getSimplexml($response)
     {
         if ($this->config['auto_encoding']) {
-            $responseBody = \Diggin\Http\Response\Encoding::encodeResponseObject($response);
+            // $responseBody = WrapperFactory::factory($response)->getBody();
+            $charsetFront = new \Diggin\Http\Charset\Front\UrlRegex;
+            $responseBody = $charsetFront->convert($response->getBody(), 
+              array(/**'url' => $this->config['url'], */
+                    'content-type' => $response->getHeaders()->get('content-type')->getFieldValue()));
         } else {
             $responseBody = $response->getBody();
         }
 
         $responseBody = str_replace('&', '&amp;', $responseBody);
-        $dom = @\DOMDocument::loadHTML($responseBody);
+        $domDoc = new \DOMDocument('1.0', 'UTF-8');
+        $dom = @$domDoc->loadHTML($responseBody);
         $simplexml = simplexml_import_dom($dom);
         
         /**
