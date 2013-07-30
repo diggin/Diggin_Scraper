@@ -117,9 +117,11 @@ abstract class AbstractStrategy
      */
     public function getValues($context, $process)
     {
- 
         if ($context instanceof Context) {
             $values = $this->extract($context->read(), $process);
+            if ($values === false) {
+                throw new Exception\UnexpectedValueException("Couldn't find By expression : ".$process->getExpression());
+            }
         } else {
             $values = $this->extract($context, $process);
             if ($values === false) {
