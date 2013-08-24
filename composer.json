@@ -16,13 +16,13 @@
         }
     ],
     "require": {
-        "zendframework/zend-http": "2.1.*",
-        "zendframework/zend-dom": "2.1.*",
+        "zendframework/zend-http": "2.2.*",
+        "zendframework/zend-dom": "2.2.*",
         "diggin/diggin-http-charset": "dev-master",
         "diggin/diggin-scraper-adapter-htmlscraping": "dev-master"
     },
     "require-dev": {
-        "zendframework/zend-filter": "2.1.*"
+        "zendframework/zend-filter": "2.2.*"
     },
     "autoload": {
         "psr-0": {
