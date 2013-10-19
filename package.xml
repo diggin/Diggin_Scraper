@@ -2,45 +2,104 @@
 <package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
  <name>Diggin_Scraper</name>
  <channel>pear.diggin.musicrider.com</channel>
- <summary>Package Diggin_Scraper summary.
-</summary>
- <description>
-Package detailed description here (found in README)</description>
+ <summary>web-sraping component</summary>
+ <description>web-sraping component, inspired by Perl’s Web::Scraper. It provides a DSL-ish interface for traversing HTML documents and returning a neatly arranged PHP ‘s multidimensional array</description>
  <lead>
-  <name>Your Name</name>
-  <user>handle</user>
-  <email>handle@php.net</email>
+  <name>sasezaki</name>
+  <user>sasezaki</user>
+  <email>sasezaki@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2011-08-28</date>
- <time>01:22:03</time>
+ <date>2013-10-20</date>
+ <time>02:51:19</time>
  <version>
-  <release>0.1.0</release>
-  <api>0.1.0</api>
+  <release>0.8.1</release>
+  <api>0.8.1</api>
  </version>
  <stability>
   <release>alpha</release>
   <api>alpha</api>
  </stability>
- <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
- <notes>Package Diggin_Scraper release notes for version 0.1.0.
-
-Package Diggin_Scraper API release notes for version 0.1.0.</notes>
+ <license>New BSD License</license>
+ <notes>developing</notes>
  <contents>
   <dir name="/">
    <dir name="src" baseinstalldir="/">
     <dir name="Diggin">
      <dir name="Scraper">
-      <file role="php" name="Main.php"/>
+      <dir name="Adapter">
+       <dir name="Exception">
+        <file role="php" name="InvalidArgumentException.php"/>
+        <file role="php" name="RuntimeException.php"/>
+        <file role="php" name="UnexpectedValueException.php"/>
+       </dir>
+       <dir name="Wrapper">
+        <file role="php" name="SimpleXMLElement.php"/>
+       </dir>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Loadhtml.php"/>
+       <file role="php" name="Normal.php"/>
+       <file role="php" name="SimplexmlAdapter.php"/>
+       <file role="php" name="StringAdapter.php"/>
+      </dir>
+      <dir name="Evaluator">
+       <file role="php" name="AbstractEvaluator.php"/>
+       <file role="php" name="Simplexml.php"/>
+       <file role="php" name="String.php"/>
+      </dir>
+      <dir name="Exception">
+       <file role="php" name="BadMethodCallException.php"/>
+       <file role="php" name="DomainException.php"/>
+       <file role="php" name="InvalidArgumentException.php"/>
+       <file role="php" name="LogicException.php"/>
+       <file role="php" name="RuntimeException.php"/>
+       <file role="php" name="UnexpectedValueException.php"/>
+      </dir>
+      <dir name="Filter">
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Filter.php"/>
+       <file role="php" name="Iterator.php"/>
+      </dir>
+      <dir name="Helper">
+       <dir name="Simplexml">
+        <file role="php" name="Autodiscovery.php"/>
+        <file role="php" name="HeadBaseHref.php"/>
+        <file role="php" name="Pagerize.php"/>
+        <file role="php" name="SimplexmlAbstract.php"/>
+        <file role="php" name="Title.php"/>
+       </dir>
+       <file role="php" name="HelperAbstract.php"/>
+      </dir>
+      <dir name="Strategy">
+       <file role="php" name="AbstractStrategy.php"/>
+       <file role="php" name="Exception.php"/>
+       <file role="php" name="Flexible.php"/>
+       <file role="php" name="Preg.php"/>
+      </dir>
+      <file role="php" name="Adapter.php"/>
+      <file role="php" name="Context.php"/>
+      <file role="php" name="Exception.php"/>
+      <file role="php" name="Process.php"/>
+      <file role="php" name="ProcessAggregate.php"/>
+      <file role="php" name="Scraper.php"/>
      </dir>
     </dir>
+   </dir>
+   <dir name="tests" baseinstalldir="/">
+    <dir name="Diggin">
+     <dir name="Scraper">
+      <file role="test" name="MultiArrayTest.php"/>
+     </dir>
+    </dir>
+    <file role="test" name="bootstrap.php"/>
+    <file role="test" name="phpunit.xml"/>
    </dir>
   </dir>
  </contents>
  <dependencies>
   <required>
    <php>
-    <min>5.2.0</min>
+    <min>5.3.3</min>
    </php>
    <pearinstaller>
     <min>2.0.0a1</min>

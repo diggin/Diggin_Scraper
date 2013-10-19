@@ -2,39 +2,74 @@
 <package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
  <name>Diggin_Scraper</name>
  <channel>pear.diggin.musicrider.com</channel>
- <summary>Package Diggin_Scraper summary.
-</summary>
- <description>
-Package detailed description here (found in README)</description>
+ <summary>web-sraping component</summary>
+ <description>web-sraping component, inspired by Perl’s Web::Scraper. It provides a DSL-ish interface for traversing HTML documents and returning a neatly arranged PHP ‘s multidimensional array</description>
  <lead>
-  <name>Your Name</name>
-  <user>handle</user>
-  <email>handle@php.net</email>
+  <name>sasezaki</name>
+  <user>sasezaki</user>
+  <email>sasezaki@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2011-08-28</date>
- <time>01:22:03</time>
+ <date>2013-10-20</date>
+ <time>02:51:19</time>
  <version>
   <release>0.1.0</release>
   <api>0.1.0</api>
  </version>
  <stability>
-  <release>alpha</release>
+  <release>devel</release>
   <api>alpha</api>
  </stability>
- <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
- <notes>Package Diggin_Scraper release notes for version 0.1.0.
-
-Package Diggin_Scraper API release notes for version 0.1.0.</notes>
+ <license>New BSD License</license>
+ <notes>developing</notes>
  <contents>
   <dir name="/">
-   <file role="php" name="php/Diggin/Scraper/Main.php"/>
+   <file role="test" name="test/pear.diggin.musicrider.com/Diggin_Scraper/phpunit.xml"/>
+   <file role="test" name="test/pear.diggin.musicrider.com/Diggin_Scraper/Diggin/Scraper/Diggin/Scraper/MultiArrayTest.php"/>
+   <file role="test" name="test/pear.diggin.musicrider.com/Diggin_Scraper/bootstrap.php"/>
+   <file role="php" name="php/Diggin/Scraper/Strategy/Preg.php"/>
+   <file role="php" name="php/Diggin/Scraper/Strategy/Flexible.php"/>
+   <file role="php" name="php/Diggin/Scraper/Strategy/Exception.php"/>
+   <file role="php" name="php/Diggin/Scraper/Strategy/AbstractStrategy.php"/>
+   <file role="php" name="php/Diggin/Scraper/Scraper.php"/>
+   <file role="php" name="php/Diggin/Scraper/ProcessAggregate.php"/>
+   <file role="php" name="php/Diggin/Scraper/Process.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/Simplexml/Title.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/Simplexml/SimplexmlAbstract.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/Simplexml/Pagerize.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/Simplexml/HeadBaseHref.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/Simplexml/Autodiscovery.php"/>
+   <file role="php" name="php/Diggin/Scraper/Helper/HelperAbstract.php"/>
+   <file role="php" name="php/Diggin/Scraper/Filter/Iterator.php"/>
+   <file role="php" name="php/Diggin/Scraper/Filter/Filter.php"/>
+   <file role="php" name="php/Diggin/Scraper/Filter/Exception.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/UnexpectedValueException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/LogicException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/DomainException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception/BadMethodCallException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Exception.php"/>
+   <file role="php" name="php/Diggin/Scraper/Evaluator/String.php"/>
+   <file role="php" name="php/Diggin/Scraper/Evaluator/Simplexml.php"/>
+   <file role="php" name="php/Diggin/Scraper/Evaluator/AbstractEvaluator.php"/>
+   <file role="php" name="php/Diggin/Scraper/Context.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Wrapper/SimpleXMLElement.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/StringAdapter.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/SimplexmlAdapter.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Normal.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Loadhtml.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Exception/UnexpectedValueException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter/Exception.php"/>
+   <file role="php" name="php/Diggin/Scraper/Adapter.php"/>
   </dir>
  </contents>
  <dependencies>
   <required>
    <php>
-    <min>5.2.0</min>
+    <min>5.3.3</min>
    </php>
    <pearinstaller>
     <min>1.4.8</min>
@@ -43,7 +78,46 @@ Package Diggin_Scraper API release notes for version 0.1.0.</notes>
  </dependencies>
  <phprelease>
   <filelist>
-   <install name="php/Diggin/Scraper/Main.php" as="Diggin/Scraper/Main.php"/>
+   <install name="php/Diggin/Scraper/Adapter.php" as="Diggin/Scraper/Adapter.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Exception.php" as="Diggin/Scraper/Adapter/Exception.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Exception/InvalidArgumentException.php" as="Diggin/Scraper/Adapter/Exception/InvalidArgumentException.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Exception/RuntimeException.php" as="Diggin/Scraper/Adapter/Exception/RuntimeException.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Exception/UnexpectedValueException.php" as="Diggin/Scraper/Adapter/Exception/UnexpectedValueException.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Loadhtml.php" as="Diggin/Scraper/Adapter/Loadhtml.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Normal.php" as="Diggin/Scraper/Adapter/Normal.php"/>
+   <install name="php/Diggin/Scraper/Adapter/SimplexmlAdapter.php" as="Diggin/Scraper/Adapter/SimplexmlAdapter.php"/>
+   <install name="php/Diggin/Scraper/Adapter/StringAdapter.php" as="Diggin/Scraper/Adapter/StringAdapter.php"/>
+   <install name="php/Diggin/Scraper/Adapter/Wrapper/SimpleXMLElement.php" as="Diggin/Scraper/Adapter/Wrapper/SimpleXMLElement.php"/>
+   <install name="php/Diggin/Scraper/Context.php" as="Diggin/Scraper/Context.php"/>
+   <install name="php/Diggin/Scraper/Evaluator/AbstractEvaluator.php" as="Diggin/Scraper/Evaluator/AbstractEvaluator.php"/>
+   <install name="php/Diggin/Scraper/Evaluator/Simplexml.php" as="Diggin/Scraper/Evaluator/Simplexml.php"/>
+   <install name="php/Diggin/Scraper/Evaluator/String.php" as="Diggin/Scraper/Evaluator/String.php"/>
+   <install name="php/Diggin/Scraper/Exception.php" as="Diggin/Scraper/Exception.php"/>
+   <install name="php/Diggin/Scraper/Exception/BadMethodCallException.php" as="Diggin/Scraper/Exception/BadMethodCallException.php"/>
+   <install name="php/Diggin/Scraper/Exception/DomainException.php" as="Diggin/Scraper/Exception/DomainException.php"/>
+   <install name="php/Diggin/Scraper/Exception/InvalidArgumentException.php" as="Diggin/Scraper/Exception/InvalidArgumentException.php"/>
+   <install name="php/Diggin/Scraper/Exception/LogicException.php" as="Diggin/Scraper/Exception/LogicException.php"/>
+   <install name="php/Diggin/Scraper/Exception/RuntimeException.php" as="Diggin/Scraper/Exception/RuntimeException.php"/>
+   <install name="php/Diggin/Scraper/Exception/UnexpectedValueException.php" as="Diggin/Scraper/Exception/UnexpectedValueException.php"/>
+   <install name="php/Diggin/Scraper/Filter/Exception.php" as="Diggin/Scraper/Filter/Exception.php"/>
+   <install name="php/Diggin/Scraper/Filter/Filter.php" as="Diggin/Scraper/Filter/Filter.php"/>
+   <install name="php/Diggin/Scraper/Filter/Iterator.php" as="Diggin/Scraper/Filter/Iterator.php"/>
+   <install name="php/Diggin/Scraper/Helper/HelperAbstract.php" as="Diggin/Scraper/Helper/HelperAbstract.php"/>
+   <install name="php/Diggin/Scraper/Helper/Simplexml/Autodiscovery.php" as="Diggin/Scraper/Helper/Simplexml/Autodiscovery.php"/>
+   <install name="php/Diggin/Scraper/Helper/Simplexml/HeadBaseHref.php" as="Diggin/Scraper/Helper/Simplexml/HeadBaseHref.php"/>
+   <install name="php/Diggin/Scraper/Helper/Simplexml/Pagerize.php" as="Diggin/Scraper/Helper/Simplexml/Pagerize.php"/>
+   <install name="php/Diggin/Scraper/Helper/Simplexml/SimplexmlAbstract.php" as="Diggin/Scraper/Helper/Simplexml/SimplexmlAbstract.php"/>
+   <install name="php/Diggin/Scraper/Helper/Simplexml/Title.php" as="Diggin/Scraper/Helper/Simplexml/Title.php"/>
+   <install name="php/Diggin/Scraper/Process.php" as="Diggin/Scraper/Process.php"/>
+   <install name="php/Diggin/Scraper/ProcessAggregate.php" as="Diggin/Scraper/ProcessAggregate.php"/>
+   <install name="php/Diggin/Scraper/Scraper.php" as="Diggin/Scraper/Scraper.php"/>
+   <install name="php/Diggin/Scraper/Strategy/AbstractStrategy.php" as="Diggin/Scraper/Strategy/AbstractStrategy.php"/>
+   <install name="php/Diggin/Scraper/Strategy/Exception.php" as="Diggin/Scraper/Strategy/Exception.php"/>
+   <install name="php/Diggin/Scraper/Strategy/Flexible.php" as="Diggin/Scraper/Strategy/Flexible.php"/>
+   <install name="php/Diggin/Scraper/Strategy/Preg.php" as="Diggin/Scraper/Strategy/Preg.php"/>
+   <install name="test/pear.diggin.musicrider.com/Diggin_Scraper/bootstrap.php" as="Diggin_Scraper/bootstrap.php"/>
+   <install name="test/pear.diggin.musicrider.com/Diggin_Scraper/Diggin/Scraper/Diggin/Scraper/MultiArrayTest.php" as="Diggin_Scraper/Diggin/Scraper/Diggin/Scraper/MultiArrayTest.php"/>
+   <install name="test/pear.diggin.musicrider.com/Diggin_Scraper/phpunit.xml" as="Diggin_Scraper/phpunit.xml"/>
   </filelist>
  </phprelease>
 </package>
