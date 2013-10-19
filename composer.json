@@ -9,12 +9,6 @@
             "email": "sasezaki@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
-        }
-    ],
     "require": {
         "zendframework/zend-http": "2.2.*",
         "zendframework/zend-dom": "2.2.*",
