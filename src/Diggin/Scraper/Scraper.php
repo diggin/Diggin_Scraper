@@ -42,8 +42,10 @@ class Scraper extends ProcessAggregate
     protected $_url;
     
     /**
+     * Throw Exception when target not found
+     *
      */
-    protected $_throwTargetExceptionsOn = true;
+    protected $_throwTargetExceptionsOn = false;
 
     /**
      * strategy name to use for changing strategy
