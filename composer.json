@@ -2,7 +2,6 @@
     "name": "diggin/diggin-scraper",
     "description": "web-sraping component, inspired by Perl’s Web::Scraper. It provides a DSL-ish interface for traversing HTML documents and returning a neatly arranged PHP ‘s multidimensional array",
     "license":"BSD-3-Clause",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "sasezaki",
