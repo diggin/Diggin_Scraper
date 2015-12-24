@@ -71,7 +71,7 @@ class HeadBaseHref extends SimplexmlAbstract
     public function getHeadBaseUrl()
     {
         if ($bases = $this->getResource()->xpath('//base[@href]')) {
-            $basehref = current($base->attributes()->href);
+            $basehref = current($bases->attributes()->href);
             // @todo
             // should be check valid schema & logging
             return $basehref;
